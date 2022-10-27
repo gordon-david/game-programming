@@ -1,0 +1,10 @@
+CMakeFiles
+*.cmake
+.cache
+.ctagsd
+.vscode
+bin/*
+build/*
+Makefile
+CMakeCache.txt
+
