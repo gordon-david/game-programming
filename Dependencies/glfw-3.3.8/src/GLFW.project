@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="GLFW" InternalType="">
+	<VirtualDirectory Name="src">
+		<File Name="context.c"/>
+		<File Name="egl_context.c"/>
+		<File Name="glx_context.c"/>
+		<File Name="init.c"/>
+		<File Name="input.c"/>
+		<File Name="linux_joystick.c"/>
+		<File Name="monitor.c"/>
+		<File Name="osmesa_context.c"/>
+		<File Name="posix_thread.c"/>
+		<File Name="posix_time.c"/>
+		<File Name="vulkan.c"/>
+		<File Name="window.c"/>
+		<File Name="x11_init.c"/>
+		<File Name="x11_monitor.c"/>
+		<File Name="x11_window.c"/>
+		<File Name="xkb_unicode.c"/>
+	</VirtualDirectory>
+	<VirtualDirectory Name="include">
+		<VirtualDirectory Name="include">
+			<VirtualDirectory Name="GLFW">
+				<File Name="../include/GLFW/glfw3.h"/>
+				<File Name="../include/GLFW/glfw3native.h"/>
+			</VirtualDirectory>
+		</VirtualDirectory>
+		<File Name="egl_context.h"/>
+		<File Name="glx_context.h"/>
+		<File Name="internal.h"/>
+		<File Name="linux_joystick.h"/>
+		<File Name="mappings.h"/>
+		<File Name="osmesa_context.h"/>
+		<File Name="posix_thread.h"/>
+		<File Name="posix_time.h"/>
+		<VirtualDirectory Name="src">
+			<File Name="src/glfw_config.h"/>
+		</VirtualDirectory>
+		<File Name="x11_platform.h"/>
+		<File Name="xkb_unicode.h"/>
+	</VirtualDirectory>
+	<Settings Type="">
+		<Configuration Name="DEBUG" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+			<Compiler Options="-g" Required="yes" PreCompiledHeader="">
+				<IncludePath Value="."/>
+			</Compiler>
+			<Linker Options="" Required="yes"/>
+			<ResourceCompiler Options="" Required="no"/>
+			<General OutputFile="../../../bin/$(ProjectName)" IntermediateDirectory="./" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="../../../bin" PauseExecWhenProcTerminates="yes"/>
+			<Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+				<PostConnectCommands/>
+				<StartupCommands/>
+			</Debugger>
+			<PreBuild/>
+			<PostBuild/>
+			<CustomBuild Enabled="yes">
+				<RebuildCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16 clean &amp;&amp; /usr/bin/gmake -f$(ProjectPath)/Makefile -j 16</RebuildCommand>
+				<CleanCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16 clean</CleanCommand>
+				<BuildCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16</BuildCommand>
+				<SingleFileCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -B $(CurrentFileFullName).o</SingleFileCommand>
+				<PreprocessFileCommand/>
+				<WorkingDirectory>$(WorkspacePath)</WorkingDirectory>
+			</CustomBuild>
+			<AdditionalRules>
+				<CustomPostBuild/>
+				<CustomPreBuild/>
+			</AdditionalRules>
+		</Configuration>
+		<GlobalSettings>
+			<Compiler Options="">
+				<IncludePath Value="."/>
+			</Compiler>
+			<Linker Options="">
+				<LibraryPath Value="."/>
+			</Linker>
+			<ResourceCompiler Options=""/>
+		</GlobalSettings>
+	</Settings>
+</CodeLite_Project>
