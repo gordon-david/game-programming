@@ -14,7 +14,6 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 # FIND_PACKAGE(GLEW REQUIRED)
 FIND_PACKAGE(OpenGL REQUIRED)
 
-
 set (SOURCE_DIR      ${PROJECT_SOURCE_DIR}/src)
 SET(DEPENDENCIES_DIR ${PROJECT_SOURCE_DIR}/Dependencies)
 
@@ -50,8 +49,8 @@ ${SOURCE_DIR}/main.cpp
 # ${GLFW_INCLUDE_DIR}/GLFW/glfw3.h
 # ${GLEW_INCLUDE_DIR}/GL/glew.h
 )	
-
-# Dependencies/glew-2.2.0/include/GL/glew.h
+# Dependencies/glew-2.2.0/include/GL/glew.hset
+set(CMAKE_POLICY_DEFAULT_CMP0072 NEW)
 # SET(GLOB SOURCE_FILES ${SOURCE_DIR}/*.cpp ${SOURCE_DIR}/*.h)
 
 # specific to linux
@@ -63,6 +62,7 @@ ${SOURCE_DIR}/main.cpp
 add_subdirectory(${GLFW_DIR} ${GLFW_DIR}/src)
 
 ADD_EXECUTABLE(project ${SOURCE_FILES})
+set (OpenGL_GL_PREFERENCE "GLVND")
 
 # target_include_directories(project PUBLIC "${GLEW_INCLUDE_DIR}")
 # target_include_directories(project PUBLIC "${GLFW_INCLUDE_DIR}")
