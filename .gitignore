@@ -8,3 +8,4 @@ build/*
 Makefile
 CMakeCache.txt
 
+Dependencies/glew-2.2.0/lib/*
