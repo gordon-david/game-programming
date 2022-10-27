@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="project" InternalType="">
+	<VirtualDirectory Name="src">
+		<VirtualDirectory Name="Dependencies">
+			<VirtualDirectory Name="glfw-3.3.8">
+				<VirtualDirectory Name="src">
+					<File Name="Dependencies/glfw-3.3.8/src/context.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/egl_context.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/glx_context.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/init.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/input.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/linux_joystick.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/monitor.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/osmesa_context.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/posix_thread.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/posix_time.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/vulkan.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/window.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/x11_init.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/x11_monitor.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/x11_window.c"/>
+					<File Name="Dependencies/glfw-3.3.8/src/xkb_unicode.c"/>
+				</VirtualDirectory>
+			</VirtualDirectory>
+		</VirtualDirectory>
+		<VirtualDirectory Name="src">
+			<File Name="src/Window.cpp"/>
+			<VirtualDirectory Name="graphics">
+				<File Name="src/graphics/IndexBuffer.cpp"/>
+				<File Name="src/graphics/Renderable2D.cpp"/>
+				<File Name="src/graphics/Renderer.cpp"/>
+				<File Name="src/graphics/Shader.cpp"/>
+				<File Name="src/graphics/VertexArray.cpp"/>
+				<File Name="src/graphics/VertexBuffer.cpp"/>
+				<File Name="src/graphics/VertexBufferLayout.cpp"/>
+			</VirtualDirectory>
+			<File Name="src/main.cpp"/>
+			<VirtualDirectory Name="math">
+				<File Name="src/math/Mat4.cpp"/>
+				<File Name="src/math/Vec2.cpp"/>
+				<File Name="src/math/Vec3.cpp"/>
+				<File Name="src/math/Vec4.cpp"/>
+			</VirtualDirectory>
+		</VirtualDirectory>
+	</VirtualDirectory>
+	<VirtualDirectory Name="include">
+		<VirtualDirectory Name="Dependencies">
+			<VirtualDirectory Name="glfw-3.3.8">
+				<VirtualDirectory Name="include">
+					<VirtualDirectory Name="GLFW">
+						<File Name="Dependencies/glfw-3.3.8/include/GLFW/glfw3.h"/>
+						<File Name="Dependencies/glfw-3.3.8/include/GLFW/glfw3native.h"/>
+					</VirtualDirectory>
+				</VirtualDirectory>
+				<VirtualDirectory Name="src">
+					<File Name="Dependencies/glfw-3.3.8/src/egl_context.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/glx_context.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/internal.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/linux_joystick.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/mappings.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/osmesa_context.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/posix_thread.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/posix_time.h"/>
+					<VirtualDirectory Name="src">
+						<File Name="Dependencies/glfw-3.3.8/src/src/glfw_config.h"/>
+					</VirtualDirectory>
+					<File Name="Dependencies/glfw-3.3.8/src/x11_platform.h"/>
+					<File Name="Dependencies/glfw-3.3.8/src/xkb_unicode.h"/>
+				</VirtualDirectory>
+			</VirtualDirectory>
+		</VirtualDirectory>
+		<VirtualDirectory Name="src">
+			<File Name="src/Window.h"/>
+			<VirtualDirectory Name="graphics">
+				<File Name="src/graphics/IndexBuffer.h"/>
+				<File Name="src/graphics/Renderable2D.h"/>
+				<File Name="src/graphics/Renderer.h"/>
+				<File Name="src/graphics/Shader.h"/>
+				<File Name="src/graphics/VertexArray.h"/>
+				<File Name="src/graphics/VertexBuffer.h"/>
+				<File Name="src/graphics/VertexBufferLayout.h"/>
+			</VirtualDirectory>
+			<VirtualDirectory Name="math">
+				<File Name="src/math/Mat4.h"/>
+				<File Name="src/math/Math.h"/>
+				<File Name="src/math/Vec2.h"/>
+				<File Name="src/math/Vec3.h"/>
+				<File Name="src/math/Vec4.h"/>
+			</VirtualDirectory>
+			<VirtualDirectory Name="utils">
+				<File Name="src/utils/Error.h"/>
+				<File Name="src/utils/fileutils.h"/>
+			</VirtualDirectory>
+		</VirtualDirectory>
+	</VirtualDirectory>
+	<Settings Type="">
+		<Configuration Name="DEBUG" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+			<Compiler Options="-g" Required="yes" PreCompiledHeader="">
+				<IncludePath Value="."/>
+			</Compiler>
+			<Linker Options="" Required="yes"/>
+			<ResourceCompiler Options="" Required="no"/>
+			<General OutputFile="bin/$(ProjectName)" IntermediateDirectory="./" Command="./$(ProjectName)" CommandArguments="" WorkingDirectory="bin" PauseExecWhenProcTerminates="yes"/>
+			<Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+				<PostConnectCommands/>
+				<StartupCommands/>
+			</Debugger>
+			<PreBuild/>
+			<PostBuild/>
+			<CustomBuild Enabled="yes">
+				<RebuildCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16 clean &amp;&amp; /usr/bin/gmake -f$(ProjectPath)/Makefile -j 16</RebuildCommand>
+				<CleanCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16 clean</CleanCommand>
+				<BuildCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -j 16</BuildCommand>
+				<SingleFileCommand>/usr/bin/gmake -f$(ProjectPath)/Makefile -B $(CurrentFileFullName).o</SingleFileCommand>
+				<PreprocessFileCommand/>
+				<WorkingDirectory>$(WorkspacePath)</WorkingDirectory>
+			</CustomBuild>
+			<AdditionalRules>
+				<CustomPostBuild/>
+				<CustomPreBuild/>
+			</AdditionalRules>
+		</Configuration>
+		<GlobalSettings>
+			<Compiler Options="">
+				<IncludePath Value="."/>
+			</Compiler>
+			<Linker Options="">
+				<LibraryPath Value="."/>
+			</Linker>
+			<ResourceCompiler Options=""/>
+		</GlobalSettings>
+	</Settings>
+</CodeLite_Project>
