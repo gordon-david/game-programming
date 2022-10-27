@@ -8,15 +8,22 @@ namespace Graphics
     Renderable2D::Renderable2D(Math::Vec3 position, Math::Vec2 size, Math::Vec4 color)
     : m_Position(position), m_Size(size), m_Color(color)
     {
+        float halfWidth = size.x / 2;
+        float halfHeight = size.y / 2;
+
 
         float *data = new float[28] {
-            0.0f, 0.0f, 0.0f,
+            // bottom left
+            -halfWidth, -halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
-            0.0f, position.y, 0.0f,
+            // top left
+            -halfWidth, halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
-            position.x, position.y, 0.0f,
+            // top right
+            halfWidth, halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
-            position.x, 0.0f, 0.0f,
+            // bottom right
+            halfWidth, -halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
         };
 
