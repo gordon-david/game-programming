@@ -20,6 +20,26 @@ namespace Graphics
 
     void Renderer::flush()
     {
+        /* TODO
+        // Dequeue<Renderable>
+        while(renderables.not_empty())
+            bind vao, ibo, shader // attatch shader reference to renderable, association so 'reference', shader lifecycle dealt with elsewhere
+            draw
+            unbind all
+            pop_front(); // removed from queue
+        */
+       while(!m_RenderablesQueue.empty())
+       {
+        Renderable2D renderable = m_RenderablesQueue.back();
+        renderable.m_IndexBuffer -> Bind();
+        renderable.m_VertexArray -> Bind();
+        renderable.m_VertexBuffer -> Bind();
+        GLCALL(glDrawElements(GL_TRIANGLES, renderable.m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr));
+        renderable.m_IndexBuffer -> Unbind();
+        renderable.m_VertexArray -> Unbind();
+        renderable.m_VertexBuffer -> Unbind();
+        m_RenderablesQueue.pop_back();
+       }
         m_RenderablesQueue.clear();
     }
 
