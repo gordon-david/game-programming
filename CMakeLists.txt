@@ -46,6 +46,8 @@ ${SOURCE_DIR}/utils/Error.h
 ${SOURCE_DIR}/Window.h ${SOURCE_DIR}/Window.cpp 
 ${SOURCE_DIR}/main.cpp 
 
+${SOURCE_DIR}/vender/stb_image/stb_image.h
+
 # ${GLFW_INCLUDE_DIR}/GLFW/glfw3.h
 # ${GLEW_INCLUDE_DIR}/GL/glew.h
 )	
@@ -66,7 +68,6 @@ set (OpenGL_GL_PREFERENCE "GLVND")
 
 # target_include_directories(project PUBLIC "${GLEW_INCLUDE_DIR}")
 # target_include_directories(project PUBLIC "${GLFW_INCLUDE_DIR}")
-
 target_link_libraries(project ${GLEW_DIR}/lib/libGLEW.a)
 target_link_libraries(project glfw)
 TARGET_LINK_LIBRARIES(project OpenGL::GL)
