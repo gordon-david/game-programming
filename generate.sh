@@ -1,6 +1,6 @@
 #!/bin/sh
 
 cmake \
-	-G "CodeLite - Unix Makefiles" \
+	-G "Unix Makefiles" \
 	-DCMAKE_BUILD_TYPE=DEBUG \
 	.
