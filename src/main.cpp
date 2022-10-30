@@ -10,6 +10,7 @@
 #include "math/Math.h"
 
 #include "utils/fileutils.h"
+#include "utils/Image.h"
 
 float RotateWithMouse(double mouseX, double mouseY, int windowX, int windowY)
 {
@@ -26,30 +27,49 @@ Math::Vec2 normalizedMousePosition(double mouseX, double mouseY, int windowX, in
     return Math::Vec2(((mouseX / windowX) * 2) - 1, (((windowY - mouseY) / windowY) * 2) - 1);
 }
 
+unsigned int buildTexture(Image::ImageData image)
+{
+    unsigned int texture;
+    GLCALL(glGenTextures(1, &texture));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, texture));
+    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data));
+    GLCALL(glGenerateMipmap(GL_TEXTURE_2D));
+
+    return texture;
+}
+
 int Loop()
 {
     Math::Vec3 position(0.0f, 0.0f, -0.5f);
     Math::Vec2 size(0.5f, 0.5f);
     Math::Vec4 color(0.001f, 0.001f, 0.0001f, 1.0f);
 
+
     Window window("title", 800, 600);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     Graphics::Renderable2D renderable = Graphics::Renderable2D(position, size, color);
 
-/*
-TODO
-    Shader();
-    Renderable2D sprite(Vec3 position, Vec2 size, vec4 color, shader);
+    // after context created
+    Image::ImageData imageData = Image::Load("res/textures/wall.jpg");
+    std::cout << imageData.width << std::endl;
+    int textureID = buildTexture(imageData);
+    
+    /*
+    TODO
+        Shader();
+        Renderable2D sprite(Vec3 position, Vec2 size, vec4 color, shader);
 
-    Simple2DRenderer r()
-    r.submit(sprite);
-    r.flush();
-*/
+        Simple2DRenderer r()
+        r.submit(sprite);
+        r.flush();
+    */
 
     Shader shader("res/shaders/Basic.shader");
     Graphics::Renderer renderer = Graphics::Renderer();
     renderer.AddRenderable(renderable);
+    // after VAO bound
+    GLCALL(glBindTexture(GL_TEXTURE_2D, textureID));
 
     int windowX, windowY;
     double mouseX, mouseY;
@@ -62,6 +82,7 @@ TODO
     shader.SetUniformVec2("light_pos", light_pos);
     while (!window.closed())
     {
+        
         window.getMousePosition(mouseX, mouseY);
         window.getWindowDimensions(windowX, windowY);
         theta = RotateWithMouse(mouseX, mouseY, windowX, windowY);
@@ -72,15 +93,16 @@ TODO
         translation.x = temp.x;
         translation.y = temp.y;
 
-        std::cout << translation << std::endl;
         mlMatrix = Math::Mat4::translation(translation);
         shader.SetUniformMat4("ml_matrix", mlMatrix);
         shader.SetUniformVec2("mouse", temp);
         renderer.Clear();
         renderer.Draw();
         window.Update();
+        if(window.isKeyPressed(GLFW_KEY_Q)){
+            window.close();
+        }
     }
-
     return 0;
 }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="project">
+	<Project Name="GLFW" Path="Dependencies/glfw-3.3.8/src/GLFW.project" Active="No"/>
+	<Project Name="project" Path="project.project" Active="No"/>
+	<BuildMatrix>
+		<WorkspaceConfiguration Name="DEBUG" Selected="yes">
+			<Project Name="GLFW" ConfigName="DEBUG"/>
+			<Project Name="project" ConfigName="DEBUG"/>
+		</WorkspaceConfiguration>
+	</BuildMatrix>
+</CodeLite_Workspace>

@@ -108,6 +108,11 @@ bool Window::init()
 
 bool Window::closed() const { return glfwWindowShouldClose(m_Window); }
 
+void Window::close()
+{
+    glfwDestroyWindow(m_Window);
+}
+
 bool Window::isKeyPressed(unsigned int keycode)
 {
     if (keycode >= MAX_KEYS)

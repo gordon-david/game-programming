@@ -12,29 +12,34 @@ namespace Graphics
         float halfHeight = size.y / 2;
 
 
-        float *data = new float[28] {
+        float *data = new float[(3 + 4 + 2) * 4] {
             // bottom left
             -halfWidth, -halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
+            0.0f, 0.0f,
             // top left
             -halfWidth, halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
+            0.0f, 1.0f,
             // top right
             halfWidth, halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
+            1.0f, 1.0f,
             // bottom right
             halfWidth, -halfHeight, 0.0f,
             color.x, color.y, color.z, color.w,
+            1.0f, 0.0f,
         };
 
         unsigned int indices[] = {0, 1, 2, 2, 3, 0};
 
         m_VertexArray = new VertexArray();
-       m_VertexBuffer = new VertexBuffer((void *)data, (3 + 4) * 4 * sizeof(float));
+       m_VertexBuffer = new VertexBuffer((void *)data, (3 + 4 + 2) * 4 * sizeof(float));
 
         VertexBufferLayout vbLayout = VertexBufferLayout();
         vbLayout.Push<float>(3); // position
         vbLayout.Push<float>(4); // color
+        vbLayout.Push<float>(2); // texture coordinates
 
         m_VertexArray->AddBuffer(*m_VertexBuffer, vbLayout);
 

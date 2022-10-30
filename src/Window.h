@@ -28,6 +28,7 @@ public:
 
     // TODO: do we want a singleton? Instead of these static methods?
     // static Window* INSTANCE;
+    void close();
 
     static bool isKeyPressed(unsigned int keycode);
     static void getMousePosition(double &x, double &y);

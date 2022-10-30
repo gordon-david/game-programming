@@ -43,6 +43,7 @@ ${SOURCE_DIR}/math/Mat4.h ${SOURCE_DIR}/math/Mat4.cpp
 ${SOURCE_DIR}/math/Math.h
 ${SOURCE_DIR}/utils/fileutils.h
 ${SOURCE_DIR}/utils/Error.h 
+${SOURCE_DIR}/utils/Image.h ${SOURCE_DIR}/utils/Image.cpp
 ${SOURCE_DIR}/Window.h ${SOURCE_DIR}/Window.cpp 
 ${SOURCE_DIR}/main.cpp 
 
