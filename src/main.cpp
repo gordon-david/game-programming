@@ -12,6 +12,23 @@
 #include "utils/fileutils.h"
 #include "utils/Image.h"
 
+#include <chrono>
+// Math::Vec2 BoundedMove(double mouseX, double mouseY, int windowX, int windowY, Graphics::Renderable2D renderable){ }
+
+Math::Vec2 FollowMouse(Math::Vec2 mouse, Math::Vec2 previousPosition, std::chrono::time_point<std::chrono::system_clock> previousTime, std::chrono::time_point<std::chrono::system_clock> currentTime)
+{
+    float velocity = 0.05; // units / microsecond
+    Math::Vec2 directionalVector = mouse - previousPosition;
+    float xDelta = mouse.x - previousPosition.x;
+    float yDelta = mouse.y - previousPosition.y;
+    float distance = (float) sqrt( (xDelta * xDelta) + (yDelta * yDelta) );
+    Math::Vec2 unitVector = Math::Vec2(directionalVector.x / distance, directionalVector.y / distance);
+
+    int64_t int_ms = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - previousTime).count();
+    Math::Vec2 positionDelta = Math::Vec2(unitVector.x * (velocity * int_ms),unitVector.y * (velocity * int_ms));
+    return previousPosition + positionDelta;
+}
+
 float RotateWithMouse(double mouseX, double mouseY, int windowX, int windowY)
 {
     float Nx = ((mouseX / windowX) * 2) - 1;
@@ -98,6 +115,12 @@ int Loop()
     Math::Vec3 rotationAxis = Math::Vec3(0.0f, 0.0f, 1.0f);
     Math::Vec3 translation = Math::Vec3(0.0f, 0.0f, 0.0f);
     Math::Vec2 light_pos(0.5f, 0.5f);
+    Math::Vec2 mouse = Math::Vec2();
+    Math::Vec2 windowV = Math::Vec2();
+    Math::Vec2 position2 = Math::Vec2();
+    std::chrono::time_point<std::chrono::system_clock> time = std::chrono::system_clock::now();
+    std::chrono::time_point<std::chrono::system_clock> new_time = std::chrono::system_clock::now();
+
     shader.SetUniformVec2("light_pos", light_pos);
 
     /* bind sample2d uniforms */
@@ -109,6 +132,10 @@ int Loop()
         window.getMousePosition(mouseX, mouseY);
         window.getWindowDimensions(windowX, windowY);
         theta = RotateWithMouse(mouseX, mouseY, windowX, windowY);
+        // mouse.x = (float)mouseX;
+        // mouse.y = (float)mouseY;
+        windowV.x = (float)windowX;
+        windowV.y = (float)windowY;
 
         shader.Bind();
 
@@ -117,8 +144,14 @@ int Loop()
         GLCALL(glActiveTexture(GL_TEXTURE1)); // this will ensure future texture binds are in position 0
         GLCALL(glBindTexture(GL_TEXTURE_2D, texture1ID)); // requires vao bound
         Math::Vec2 temp = normalizedMousePosition(mouseX, mouseY, windowX, windowY);
-        translation.x = temp.x;
-        translation.y = temp.y;
+        mouse = temp;
+
+        new_time = std::chrono::system_clock::now();
+        position2 = FollowMouse(mouse, position2, time, new_time);
+        time = new_time;
+        std::cout << position2 << std::endl;
+        translation.x = position2.x;
+        translation.y = position2.y;
 
         mlMatrix = Math::Mat4::translation(translation);
         shader.SetUniformMat4("ml_matrix", mlMatrix);
