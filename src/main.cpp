@@ -17,15 +17,21 @@
 
 Math::Vec2 FollowMouse(Math::Vec2 mouse, Math::Vec2 previousPosition, std::chrono::time_point<std::chrono::system_clock> previousTime, std::chrono::time_point<std::chrono::system_clock> currentTime)
 {
-    float velocity = 0.05; // units / microsecond
-    Math::Vec2 directionalVector = mouse - previousPosition;
+    float velocity = 0.000001; // units / microsecond
     float xDelta = mouse.x - previousPosition.x;
     float yDelta = mouse.y - previousPosition.y;
     float distance = (float) sqrt( (xDelta * xDelta) + (yDelta * yDelta) );
+
+    Math::Vec2 directionalVector = mouse - previousPosition;
     Math::Vec2 unitVector = Math::Vec2(directionalVector.x / distance, directionalVector.y / distance);
 
     int64_t int_ms = std::chrono::duration_cast<std::chrono::microseconds>(currentTime - previousTime).count();
     Math::Vec2 positionDelta = Math::Vec2(unitVector.x * (velocity * int_ms),unitVector.y * (velocity * int_ms));
+		// if distance < velocity return mouse
+		if(distance < velocity * int_ms)
+		{
+			return mouse;
+		}
     return previousPosition + positionDelta;
 }
 
@@ -149,7 +155,6 @@ int Loop()
         new_time = std::chrono::system_clock::now();
         position2 = FollowMouse(mouse, position2, time, new_time);
         time = new_time;
-        std::cout << position2 << std::endl;
         translation.x = position2.x;
         translation.y = position2.y;
 
