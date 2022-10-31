@@ -37,6 +37,7 @@ unsigned int buildTexture(Image::ImageData image)
 {
     unsigned int texture;
     GLCALL(glGenTextures(1, &texture));
+    GLCALL(glBindTexture(GL_TEXTURE_2D, texture)); // requires vao bound
 
     if (image.channels < 3 || image.channels > 4)
     {
@@ -50,7 +51,6 @@ unsigned int buildTexture(Image::ImageData image)
     {
         GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data));
     }
-    GLCALL(glBindTexture(GL_TEXTURE_2D, texture)); // requires vao bound
     GLCALL(glGenerateMipmap(GL_TEXTURE_2D));
 
     return texture;
@@ -63,7 +63,7 @@ int Loop()
     Math::Vec4 color(0.001f, 0.001f, 0.0001f, 1.0f);
 
     Window window("title", 800, 600);
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    GLCALL(glClearColor(0.8f, 0.2f, 0.2f, 1.0f));
 
     Graphics::Renderable2D renderable = Graphics::Renderable2D(position, size, color);
 
@@ -83,11 +83,12 @@ int Loop()
     Shader shader("res/shaders/Basic.shader");
     Graphics::Renderer renderer = Graphics::Renderer();
     renderer.AddRenderable(renderable);
+    shader.Bind();
 
     /* Textures */
-    GLCALL(glActiveTexture(GL_TEXTURE0)); // this will ensure future texture binds are in position 0
+    // GLCALL(glActiveTexture(GL_TEXTURE0)); // this will ensure future texture binds are in position 0
     int texture0ID = buildTexture(textureWall);
-    GLCALL(glActiveTexture(GL_TEXTURE1)); // this will ensure future texture binds are in position 1
+    // GLCALL(glActiveTexture(GL_TEXTURE1)); // this will ensure future texture binds are in position 1
     int texture1ID = buildTexture(textureHappyFace);
 
     int windowX, windowY;
@@ -97,7 +98,6 @@ int Loop()
     Math::Vec3 rotationAxis = Math::Vec3(0.0f, 0.0f, 1.0f);
     Math::Vec3 translation = Math::Vec3(0.0f, 0.0f, 0.0f);
     Math::Vec2 light_pos(0.5f, 0.5f);
-    shader.Bind();
     shader.SetUniformVec2("light_pos", light_pos);
 
     /* bind sample2d uniforms */
@@ -112,6 +112,10 @@ int Loop()
 
         shader.Bind();
 
+        GLCALL(glActiveTexture(GL_TEXTURE0)); // this will ensure future texture binds are in position 0
+        GLCALL(glBindTexture(GL_TEXTURE_2D, texture0ID)); // requires vao bound
+        GLCALL(glActiveTexture(GL_TEXTURE1)); // this will ensure future texture binds are in position 0
+        GLCALL(glBindTexture(GL_TEXTURE_2D, texture1ID)); // requires vao bound
         Math::Vec2 temp = normalizedMousePosition(mouseX, mouseY, windowX, windowY);
         translation.x = temp.x;
         translation.y = temp.y;

@@ -41,8 +41,8 @@ in vec2 TexCoord;
 
 void main()
 {
-    float intensity = 1.0 / length(m_pos.xy - light_pos) ;
-    fragment_color = texture(texture0, TexCoord) * intensity;
-//  fragment_color = vertex_color * intensity; 
+    // float intensity = 1.0 / length(m_pos.xy - light_pos) ;
+    fragment_color = mix(texture(texture0, TexCoord), texture(texture1, TexCoord), 0.2);
+    // fragment_color = vertex_color * intensity; 
 };
 
