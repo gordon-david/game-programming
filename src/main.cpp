@@ -27,12 +27,30 @@ Math::Vec2 normalizedMousePosition(double mouseX, double mouseY, int windowX, in
     return Math::Vec2(((mouseX / windowX) * 2) - 1, (((windowY - mouseY) / windowY) * 2) - 1);
 }
 
+/**
+ * @brief builds and binds texture to opengl, requires a window context to be created,
+ *
+ * @param image
+ * @return unsigned int
+ */
 unsigned int buildTexture(Image::ImageData image)
 {
     unsigned int texture;
     GLCALL(glGenTextures(1, &texture));
-    GLCALL(glBindTexture(GL_TEXTURE_2D, texture));
-    GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data));
+
+    if (image.channels < 3 || image.channels > 4)
+    {
+        std::cout << "ERROR: Failed to bind image, image has unexpected number of channels" << std::endl;
+    }
+    if (image.channels == 3)
+    {
+        GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE, image.data));
+    }
+    else if (image.channels == 4)
+    {
+        GLCALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.width, image.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image.data));
+    }
+    GLCALL(glBindTexture(GL_TEXTURE_2D, texture)); // requires vao bound
     GLCALL(glGenerateMipmap(GL_TEXTURE_2D));
 
     return texture;
@@ -44,17 +62,14 @@ int Loop()
     Math::Vec2 size(0.5f, 0.5f);
     Math::Vec4 color(0.001f, 0.001f, 0.0001f, 1.0f);
 
-
     Window window("title", 800, 600);
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
     Graphics::Renderable2D renderable = Graphics::Renderable2D(position, size, color);
 
     // after context created
-    Image::ImageData imageData = Image::Load("res/textures/wall.jpg");
-    std::cout << imageData.width << std::endl;
-    int textureID = buildTexture(imageData);
-    
+    Image::ImageData textureWall = Image::Load("res/textures/wall.jpg");
+    Image::ImageData textureHappyFace = Image::Load("res/textures/happy_face.png");
     /*
     TODO
         Shader();
@@ -68,8 +83,12 @@ int Loop()
     Shader shader("res/shaders/Basic.shader");
     Graphics::Renderer renderer = Graphics::Renderer();
     renderer.AddRenderable(renderable);
-    // after VAO bound
-    GLCALL(glBindTexture(GL_TEXTURE_2D, textureID));
+
+    /* Textures */
+    GLCALL(glActiveTexture(GL_TEXTURE0)); // this will ensure future texture binds are in position 0
+    int texture0ID = buildTexture(textureWall);
+    GLCALL(glActiveTexture(GL_TEXTURE1)); // this will ensure future texture binds are in position 1
+    int texture1ID = buildTexture(textureHappyFace);
 
     int windowX, windowY;
     double mouseX, mouseY;
@@ -80,9 +99,13 @@ int Loop()
     Math::Vec2 light_pos(0.5f, 0.5f);
     shader.Bind();
     shader.SetUniformVec2("light_pos", light_pos);
+
+    /* bind sample2d uniforms */
+    shader.setInt("texture0", 0);
+    shader.setInt("texture1", 1);
     while (!window.closed())
     {
-        
+
         window.getMousePosition(mouseX, mouseY);
         window.getWindowDimensions(windowX, windowY);
         theta = RotateWithMouse(mouseX, mouseY, windowX, windowY);
@@ -99,7 +122,8 @@ int Loop()
         renderer.Clear();
         renderer.Draw();
         window.Update();
-        if(window.isKeyPressed(GLFW_KEY_Q)){
+        if (window.isKeyPressed(GLFW_KEY_Q))
+        {
             window.close();
         }
     }

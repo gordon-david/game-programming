@@ -14,6 +14,7 @@ namespace Image
 		unsigned char *data;
 
 		~ImageData();
+        friend std::ostream& operator<<(std::ostream& stream, const ImageData& imageData);
 	};
 
 	ImageData Load(const std::string filepath); 

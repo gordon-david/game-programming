@@ -30,7 +30,8 @@ void main()
 out vec4 fragment_color;
 
 uniform vec2 light_pos;
-uniform sampler2D Texture;
+uniform sampler2D texture0;
+uniform sampler2D texture1;
 
 in vec4 vertex_color;
 in vec4 pos;
@@ -41,7 +42,7 @@ in vec2 TexCoord;
 void main()
 {
     float intensity = 1.0 / length(m_pos.xy - light_pos) ;
-    fragment_color = texture(Texture, TexCoord) * intensity;
+    fragment_color = texture(texture0, TexCoord) * intensity;
 //  fragment_color = vertex_color * intensity; 
 };
 
